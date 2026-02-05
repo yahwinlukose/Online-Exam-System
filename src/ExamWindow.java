@@ -23,35 +23,83 @@ public class ExamWindow extends JFrame {
     ButtonGroup group;
     JButton nextBtn;
 
-    String currentUser = "john"; // later pass real username
+    String currentUser; // store logged-in user
 
-    public ExamWindow() {
+    // ✅ UPDATED CONSTRUCTOR
+    public ExamWindow(String username) {
+        this.currentUser = username;
 
         setTitle("Online Exam");
-        setSize(600, 350);
+        setSize(700, 550);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+        setLayout(new BorderLayout(10, 10));
 
-        questionLabel = new JLabel();
-        questionLabel.setBounds(50, 40, 500, 30);
-        questionLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        add(questionLabel);
+        // Set background
+        getContentPane().setBackground(new Color(240, 242, 245));
+
+        // Header Panel with Timer
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBackground(new Color(41, 128, 185));
+        headerPanel.setPreferredSize(new Dimension(700, 60));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        JLabel examTitle = new JLabel("Online Examination");
+        examTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        examTitle.setForeground(Color.WHITE);
+        headerPanel.add(examTitle, BorderLayout.WEST);
 
         timerLabel = new JLabel("Time Left: 60");
-        timerLabel.setBounds(450, 10, 120, 30);
-        timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        add(timerLabel);
+        timerLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        timerLabel.setForeground(new Color(255, 255, 100));
+        headerPanel.add(timerLabel, BorderLayout.EAST);
+
+        add(headerPanel, BorderLayout.NORTH);
+
+        // Main Content Panel
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(Color.WHITE);
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+
+        // Question Panel
+        JPanel questionPanel = new JPanel();
+        questionPanel.setLayout(new BorderLayout());
+        questionPanel.setBackground(Color.WHITE);
+        questionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+
+        questionLabel = new JLabel();
+        questionLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        questionLabel.setForeground(new Color(52, 73, 94));
+        questionPanel.add(questionLabel, BorderLayout.CENTER);
+
+        contentPanel.add(questionPanel);
+
+        // Options Panel
+        JPanel optionsPanel = new JPanel();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+        optionsPanel.setBackground(Color.WHITE);
+        optionsPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         op1 = new JRadioButton();
         op2 = new JRadioButton();
         op3 = new JRadioButton();
         op4 = new JRadioButton();
 
-        op1.setBounds(50, 90, 400, 25);
-        op2.setBounds(50, 120, 400, 25);
-        op3.setBounds(50, 150, 400, 25);
-        op4.setBounds(50, 180, 400, 25);
+        op1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        op2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        op3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        op4.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+        op1.setBackground(Color.WHITE);
+        op2.setBackground(Color.WHITE);
+        op3.setBackground(Color.WHITE);
+        op4.setBackground(Color.WHITE);
+
+        op1.setBorder(BorderFactory.createEmptyBorder(8, 5, 8, 5));
+        op2.setBorder(BorderFactory.createEmptyBorder(8, 5, 8, 5));
+        op3.setBorder(BorderFactory.createEmptyBorder(8, 5, 8, 5));
+        op4.setBorder(BorderFactory.createEmptyBorder(8, 5, 8, 5));
 
         group = new ButtonGroup();
         group.add(op1);
@@ -59,17 +107,33 @@ public class ExamWindow extends JFrame {
         group.add(op3);
         group.add(op4);
 
-        add(op1);
-        add(op2);
-        add(op3);
-        add(op4);
+        optionsPanel.add(op1);
+        optionsPanel.add(op2);
+        optionsPanel.add(op3);
+        optionsPanel.add(op4);
+
+        contentPanel.add(optionsPanel);
+
+        add(contentPanel, BorderLayout.CENTER);
+
+        // Button Panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(new Color(240, 242, 245));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
 
         nextBtn = new JButton("Next");
-        nextBtn.setBounds(250, 240, 100, 30);
-        add(nextBtn);
+        nextBtn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        nextBtn.setBackground(new Color(46, 204, 113));
+        nextBtn.setForeground(Color.WHITE);
+        nextBtn.setFocusPainted(false);
+        nextBtn.setPreferredSize(new Dimension(120, 40));
+        nextBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonPanel.add(nextBtn);
 
-        loadFromDB();   // load real questions
-        loadQuestion(); // show first question
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        loadFromDB();
+        loadQuestion();
         startTimer();
 
         nextBtn.addActionListener(e -> checkAnswer());
@@ -94,7 +158,6 @@ public class ExamWindow extends JFrame {
                 });
                 answers.add(rs.getInt("answer"));
             }
-
             con.close();
         } catch (Exception e) {
             e.printStackTrace();

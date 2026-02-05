@@ -11,62 +11,151 @@ public class AddQuestionFrame extends JFrame {
     public AddQuestionFrame() {
 
         setTitle("Add Question");
-        setSize(500, 400);
+        setSize(600, 550);
         setLocationRelativeTo(null);
-        setLayout(null);
+        setLayout(new BorderLayout(10, 10));
 
+        // Set background
+        getContentPane().setBackground(new Color(240, 242, 245));
+
+        // Title Panel
+        JPanel titlePanel = new JPanel();
+        titlePanel.setBackground(new Color(41, 128, 185));
+        titlePanel.setPreferredSize(new Dimension(600, 60));
+        titlePanel.setLayout(new GridBagLayout());
+
+        JLabel titleLabel = new JLabel("Add New Question");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setForeground(Color.WHITE);
+        titlePanel.add(titleLabel);
+
+        add(titlePanel, BorderLayout.NORTH);
+
+        // Form Panel
+        JPanel formPanel = new JPanel();
+        formPanel.setBackground(Color.WHITE);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        formPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Question
         JLabel qLabel = new JLabel("Question:");
-        qLabel.setBounds(30, 30, 100, 25);
-        add(qLabel);
+        qLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0.3;
+        formPanel.add(qLabel, gbc);
 
         qField = new JTextField();
-        qField.setBounds(130, 30, 300, 25);
-        add(qField);
+        qField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        qField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 0.7;
+        formPanel.add(qField, gbc);
 
+        // Option 1
         JLabel l1 = new JLabel("Option 1:");
-        l1.setBounds(30, 70, 100, 25);
-        add(l1);
+        l1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0.3;
+        formPanel.add(l1, gbc);
 
         op1 = new JTextField();
-        op1.setBounds(130, 70, 300, 25);
-        add(op1);
+        op1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        op1.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 0.7;
+        formPanel.add(op1, gbc);
 
+        // Option 2
         JLabel l2 = new JLabel("Option 2:");
-        l2.setBounds(30, 110, 100, 25);
-        add(l2);
+        l2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 0.3;
+        formPanel.add(l2, gbc);
 
         op2 = new JTextField();
-        op2.setBounds(130, 110, 300, 25);
-        add(op2);
+        op2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        op2.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.weightx = 0.7;
+        formPanel.add(op2, gbc);
 
+        // Option 3
         JLabel l3 = new JLabel("Option 3:");
-        l3.setBounds(30, 150, 100, 25);
-        add(l3);
+        l3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.weightx = 0.3;
+        formPanel.add(l3, gbc);
 
         op3 = new JTextField();
-        op3.setBounds(130, 150, 300, 25);
-        add(op3);
+        op3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        op3.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.weightx = 0.7;
+        formPanel.add(op3, gbc);
 
+        // Option 4
         JLabel l4 = new JLabel("Option 4:");
-        l4.setBounds(30, 190, 100, 25);
-        add(l4);
+        l4.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.weightx = 0.3;
+        formPanel.add(l4, gbc);
 
         op4 = new JTextField();
-        op4.setBounds(130, 190, 300, 25);
-        add(op4);
+        op4.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        op4.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.weightx = 0.7;
+        formPanel.add(op4, gbc);
 
-        JLabel ansLabel = new JLabel("Correct:");
-        ansLabel.setBounds(30, 230, 100, 25);
-        add(ansLabel);
+        // Correct Answer
+        JLabel ansLabel = new JLabel("Correct Answer:");
+        ansLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.weightx = 0.3;
+        formPanel.add(ansLabel, gbc);
 
         ansBox = new JComboBox<>(new String[]{"1","2","3","4"});
+        ansBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        ansBox.setPreferredSize(new Dimension(100, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.weightx = 0.7;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        formPanel.add(ansBox, gbc);
 
-        ansBox.setBounds(130, 230, 100, 25);
-        add(ansBox);
+        add(formPanel, BorderLayout.CENTER);
+
+        // Button Panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(new Color(240, 242, 245));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
 
         saveBtn = new JButton("Save Question");
-        saveBtn.setBounds(180, 280, 150, 30);
-        add(saveBtn);
+        saveBtn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        saveBtn.setBackground(new Color(46, 204, 113));
+        saveBtn.setForeground(Color.WHITE);
+        saveBtn.setFocusPainted(false);
+        saveBtn.setPreferredSize(new Dimension(150, 40));
+        saveBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonPanel.add(saveBtn);
+
+        add(buttonPanel, BorderLayout.SOUTH);
 
         saveBtn.addActionListener(e -> saveQuestion());
 
